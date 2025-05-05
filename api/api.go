@@ -10,9 +10,13 @@ import (
 	"github.com/jmoiron/sqlx"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"githuh.com/PhuPhuoc/curanest-notification-service/builder"
 	"githuh.com/PhuPhuoc/curanest-notification-service/config"
 	"githuh.com/PhuPhuoc/curanest-notification-service/docs"
 	"githuh.com/PhuPhuoc/curanest-notification-service/middleware"
+	notificationrpcservice "githuh.com/PhuPhuoc/curanest-notification-service/module/notification/infars/rpcservice"
+	notificationcommands "githuh.com/PhuPhuoc/curanest-notification-service/module/notification/usecase/commands"
+	notificationqueries "githuh.com/PhuPhuoc/curanest-notification-service/module/notification/usecase/quries"
 )
 
 type server struct {
@@ -57,7 +61,7 @@ func (sv *server) RunApp() error {
 
 	if envDevlopment == env_vps {
 		gin.SetMode(gin.ReleaseMode)
-		docs.SwaggerInfo.BasePath = "/appointment"
+		docs.SwaggerInfo.BasePath = "/notification"
 	}
 
 	router := gin.New()
@@ -76,14 +80,24 @@ func (sv *server) RunApp() error {
 	router.GET("/ping", func(c *gin.Context) { c.JSON(http.StatusOK, gin.H{"message": "curanest-notification-service - pong"}) })
 
 	// authClient := common.NewJWTx(config.AppConfig.Key)
+	noti_cmd_builder := notificationcommands.NewNotificationCmdWithBuilder(
+		builder.NewNotificationBuilder(sv.db),
+	)
+	noti_query_builder := notificationqueries.NewNotificationQueryWithBuilder(
+		builder.NewNotificationBuilder(sv.db),
+	)
 
 	// api := router.Group("/api/v1")
 	// {
 	// }
 
-	// rpc := router.Group("/external/rpc")
-	// {
-	// }
+	rpc := router.Group("/external/rpc")
+	{
+		notificationrpcservice.NewNotificationRPCService(
+			noti_cmd_builder,
+			noti_query_builder,
+		).Routes(rpc)
+	}
 
 	log.Println("server start listening at port: ", sv.port)
 	return router.Run(sv.port)

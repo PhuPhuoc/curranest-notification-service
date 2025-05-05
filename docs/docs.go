@@ -15,6 +15,50 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/external/rpc/notifications/push-token": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "create/update push-token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rpc: notifications"
+                ],
+                "summary": "create/update push-token",
+                "parameters": [
+                    {
+                        "description": "push-token data to create/update",
+                        "name": "form",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/notificationcommands.RequestPushTokenDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "data",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
         "/ping": {
             "get": {
                 "description": "ping server",
@@ -40,6 +84,19 @@ const docTemplate = `{
                         "description": "Bad request error",
                         "schema": {}
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "notificationcommands.RequestPushTokenDTO": {
+            "type": "object",
+            "properties": {
+                "account-id": {
+                    "type": "string"
+                },
+                "push-token": {
+                    "type": "string"
                 }
             }
         }

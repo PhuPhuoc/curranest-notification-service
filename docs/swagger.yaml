@@ -1,3 +1,11 @@
+definitions:
+  notificationcommands.RequestPushTokenDTO:
+    properties:
+      account-id:
+        type: string
+      push-token:
+        type: string
+    type: object
 info:
   contact: {}
   description: |-
@@ -9,6 +17,34 @@ info:
   title: Notification Service
   version: "1.0"
 paths:
+  /external/rpc/notifications/push-token:
+    post:
+      consumes:
+      - application/json
+      description: create/update push-token
+      parameters:
+      - description: push-token data to create/update
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/notificationcommands.RequestPushTokenDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: data
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request error
+          schema: {}
+      security:
+      - ApiKeyAuth: []
+      summary: create/update push-token
+      tags:
+      - 'rpc: notifications'
   /ping:
     get:
       consumes:
