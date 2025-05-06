@@ -31,5 +31,9 @@ func (s *notificationRPCService) Routes(g *gin.RouterGroup) {
 			"/push-token",
 			s.handleUpdatePushToken(),
 		)
+		noti_route.POST(
+			"",
+			s.handleCreateNotification(),
+		)
 	}
 }

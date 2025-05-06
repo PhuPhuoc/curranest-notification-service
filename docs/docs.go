@@ -15,6 +15,50 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/external/rpc/notifications": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "create notification",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rpc: notifications"
+                ],
+                "summary": "create notification",
+                "parameters": [
+                    {
+                        "description": "push-token data to create/update",
+                        "name": "form",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/notificationcommands.RequestCreateNotification"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "data",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
         "/external/rpc/notifications/push-token": {
             "post": {
                 "security": [
@@ -89,6 +133,20 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "notificationcommands.RequestCreateNotification": {
+            "type": "object",
+            "properties": {
+                "account-id": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "route": {
+                    "type": "string"
+                }
+            }
+        },
         "notificationcommands.RequestPushTokenDTO": {
             "type": "object",
             "properties": {

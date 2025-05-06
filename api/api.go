@@ -42,6 +42,8 @@ const (
 
 	url_appointment_local = "http://localhost:8004"
 	url_appointment_prod  = "http://appointment_service:8080"
+
+	url_expo_noti = "https://exp.host/--/api/v2/push/send"
 )
 
 // @Summary		ping server
@@ -81,7 +83,7 @@ func (sv *server) RunApp() error {
 
 	// authClient := common.NewJWTx(config.AppConfig.Key)
 	noti_cmd_builder := notificationcommands.NewNotificationCmdWithBuilder(
-		builder.NewNotificationBuilder(sv.db),
+		builder.NewNotificationBuilder(sv.db).AddUrlExpoNotiUrl(url_expo_noti),
 	)
 	noti_query_builder := notificationqueries.NewNotificationQueryWithBuilder(
 		builder.NewNotificationBuilder(sv.db),

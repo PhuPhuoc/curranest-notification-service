@@ -1,4 +1,13 @@
 definitions:
+  notificationcommands.RequestCreateNotification:
+    properties:
+      account-id:
+        type: string
+      content:
+        type: string
+      route:
+        type: string
+    type: object
   notificationcommands.RequestPushTokenDTO:
     properties:
       account-id:
@@ -17,6 +26,34 @@ info:
   title: Notification Service
   version: "1.0"
 paths:
+  /external/rpc/notifications:
+    post:
+      consumes:
+      - application/json
+      description: create notification
+      parameters:
+      - description: push-token data to create/update
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/notificationcommands.RequestCreateNotification'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: data
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request error
+          schema: {}
+      security:
+      - ApiKeyAuth: []
+      summary: create notification
+      tags:
+      - 'rpc: notifications'
   /external/rpc/notifications/push-token:
     post:
       consumes:
