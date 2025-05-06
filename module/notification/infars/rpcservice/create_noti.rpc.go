@@ -30,6 +30,7 @@ func (s *notificationRPCService) handleCreateNotification() gin.HandlerFunc {
 			common.ResponseError(ctx, err)
 			return
 		}
+
 		var pushTokenEntity *notificationdomain.PushToken
 		if pushTokenDTO != nil {
 			pushTokenEntity, _ = pushTokenDTO.ToPushTokenEntity()
