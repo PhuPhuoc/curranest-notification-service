@@ -35,3 +35,12 @@ type AndroidConfig struct {
 type IOSConfig struct {
 	Badge int `json:"badge"`
 }
+
+type Data struct {
+	Status string `json:"status"`
+	ID     string `json:"id"`
+}
+
+type ExpoResponse struct {
+	Data Data `json:"data"`
+}

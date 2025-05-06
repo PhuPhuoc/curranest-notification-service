@@ -41,6 +41,6 @@ func (s *notificationRPCService) handleCreateNotification() gin.HandlerFunc {
 			return
 		}
 
-		common.ResponseUpdated(ctx)
+		common.ResponseCreated(ctx)
 	}
 }
