@@ -23,6 +23,11 @@ var (
 		"content",
 		"route",
 		"created_at",
+		"read_at",
+	}
+
+	UPDATE_NOTIFICATION = []string{
+		"read_at",
 	}
 
 	TABLE_PUSHTOKEN = `push_tokens`

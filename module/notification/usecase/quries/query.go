@@ -9,6 +9,9 @@ import (
 
 type Queries struct {
 	GetPushTokenByAccId *getPushTokenByAccountIdHandler
+
+	GetAllNoti   *getNotiByFilterHandler
+	FindNotiById *findNotiByIdHandler
 }
 
 type Builder interface {
@@ -20,9 +23,17 @@ func NewNotificationQueryWithBuilder(b Builder) Queries {
 		GetPushTokenByAccId: NewGetPushTokenByAccountIdHandler(
 			b.BuildNotificationQueryRepo(),
 		),
+		GetAllNoti: NewGetNotiByFilterHandler(
+			b.BuildNotificationQueryRepo(),
+		),
+		FindNotiById: NewFindNotiByIdHandler(
+			b.BuildNotificationQueryRepo(),
+		),
 	}
 }
 
 type NotificationQueryRepo interface {
 	FindPushTokenByAccountId(ctx context.Context, accId uuid.UUID) (*notificationdomain.PushToken, error)
+	GetAllNotification(ctx context.Context, filter *FilterGetNoti) ([]notificationdomain.Notification, error)
+	FindById(ctx context.Context, appointmentId uuid.UUID) (*notificationdomain.Notification, error)
 }

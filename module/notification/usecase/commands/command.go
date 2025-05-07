@@ -9,6 +9,8 @@ import (
 type Commands struct {
 	UpdateAccountPushToken *updateAccountPushTokenHandler
 	CreateNoti             *createNotificationHandler
+
+	UpdateReadAt *updateNotiReadAtHandler
 }
 
 type Builder interface {
@@ -25,6 +27,10 @@ func NewNotificationCmdWithBuilder(b Builder) Commands {
 			b.BuildNotificationCmdRepo(),
 			b.BuildExpoFetcher(),
 		),
+
+		UpdateReadAt: NewUpdateNotiReadAtHandler(
+			b.BuildNotificationCmdRepo(),
+		),
 	}
 }
 
@@ -32,6 +38,7 @@ type NoticationCommandRepo interface {
 	CreatePushToken(ctx context.Context, entity *notificationdomain.PushToken) error
 	UpdatePushToken(ctx context.Context, entity *notificationdomain.PushToken) error
 	CreateNotification(ctx context.Context, entity *notificationdomain.Notification) error
+	UpdateNoti(ctx context.Context, entity *notificationdomain.Notification) error
 }
 
 type ExpoNotiFetcher interface {

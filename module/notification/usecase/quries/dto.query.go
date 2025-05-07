@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"githuh.com/PhuPhuoc/curanest-notification-service/common"
 	notificationdomain "githuh.com/PhuPhuoc/curanest-notification-service/module/notification/domain"
 )
 
@@ -60,4 +61,10 @@ func (p *NotificationDTO) ToNotificationEntity() (*notificationdomain.Notificati
 		p.CreatedAt,
 		p.ReadAt,
 	)
+}
+
+type FilterGetNoti struct {
+	AccountID uuid.UUID      `json:"account-id"`
+	HadRead   *bool          `json:"had-read,omitempty"`
+	Paging    *common.Paging `json:"-"`
 }

@@ -26,6 +26,72 @@ info:
   title: Notification Service
   version: "1.0"
 paths:
+  /api/v1/notifications:
+    get:
+      consumes:
+      - application/json
+      description: get notification
+      parameters:
+      - description: service ID (UUID)
+        in: query
+        name: account-id
+        required: true
+        type: string
+      - description: apply pagination not not
+        in: query
+        name: had-read
+        type: boolean
+      - description: current page index
+        in: query
+        name: page
+        type: integer
+      - description: number of items per page
+        in: query
+        name: page-size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: data
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request error
+          schema: {}
+      security:
+      - ApiKeyAuth: []
+      summary: get notification
+      tags:
+      - notifications
+  /api/v1/notifications/{notification-id}:
+    patch:
+      consumes:
+      - application/json
+      description: update notification read at (user seen message)
+      parameters:
+      - description: notification ID (UUID)
+        in: path
+        name: notification-id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: data
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request error
+          schema: {}
+      security:
+      - ApiKeyAuth: []
+      summary: update notification read at (user seen message)
+      tags:
+      - notifications
   /external/rpc/notifications:
     post:
       consumes:

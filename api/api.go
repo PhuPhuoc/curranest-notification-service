@@ -14,6 +14,7 @@ import (
 	"githuh.com/PhuPhuoc/curanest-notification-service/config"
 	"githuh.com/PhuPhuoc/curanest-notification-service/docs"
 	"githuh.com/PhuPhuoc/curanest-notification-service/middleware"
+	notihttpservice "githuh.com/PhuPhuoc/curanest-notification-service/module/notification/infars/httpservice"
 	notificationrpcservice "githuh.com/PhuPhuoc/curanest-notification-service/module/notification/infars/rpcservice"
 	notificationcommands "githuh.com/PhuPhuoc/curanest-notification-service/module/notification/usecase/commands"
 	notificationqueries "githuh.com/PhuPhuoc/curanest-notification-service/module/notification/usecase/quries"
@@ -89,9 +90,13 @@ func (sv *server) RunApp() error {
 		builder.NewNotificationBuilder(sv.db),
 	)
 
-	// api := router.Group("/api/v1")
-	// {
-	// }
+	api := router.Group("/api/v1")
+	{
+		notihttpservice.NewNotiHTTPService(
+			noti_cmd_builder,
+			noti_query_builder,
+		).Routes(api)
+	}
 
 	rpc := router.Group("/external/rpc")
 	{

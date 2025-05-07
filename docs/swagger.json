@@ -7,6 +7,108 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/v1/notifications": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get notification",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "notifications"
+                ],
+                "summary": "get notification",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "service ID (UUID)",
+                        "name": "account-id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "apply pagination not not",
+                        "name": "had-read",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "current page index",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "number of items per page",
+                        "name": "page-size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "data",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/v1/notifications/{notification-id}": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "update notification read at (user seen message)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "notifications"
+                ],
+                "summary": "update notification read at (user seen message)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "notification ID (UUID)",
+                        "name": "notification-id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "data",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
         "/external/rpc/notifications": {
             "post": {
                 "security": [
