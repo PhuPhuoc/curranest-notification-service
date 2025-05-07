@@ -36,16 +36,18 @@ func (h *updateAccountPushTokenHandler) Handle(ctx context.Context, dto *Request
 		}
 
 	} else {
-		updateEntity, _ := notificationdomain.NewPushToken(
-			dto.AccountId,
-			dto.PushToken,
-			nil,
-		)
+		if dto.PushToken != "" {
+			updateEntity, _ := notificationdomain.NewPushToken(
+				dto.AccountId,
+				dto.PushToken,
+				nil,
+			)
 
-		if err := h.cmdRepo.UpdatePushToken(ctx, updateEntity); err != nil {
-			return common.NewInternalServerError().
-				WithReason("error when update push token").
-				WithInner(err.Error())
+			if err := h.cmdRepo.UpdatePushToken(ctx, updateEntity); err != nil {
+				return common.NewInternalServerError().
+					WithReason("error when update push token").
+					WithInner(err.Error())
+			}
 		}
 	}
 

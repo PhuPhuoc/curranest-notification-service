@@ -29,7 +29,7 @@ func (api *externalExpoNotiService) PushNoti(ctx context.Context, req *notificat
 		return fmt.Errorf("failed to parse JSON: %v, body: %s", err, string(data))
 	}
 
-	if apiResponse.Data.Status != "OK" {
+	if apiResponse.Data.Status != "ok" {
 		return fmt.Errorf("API returned non-OK status: %s", apiResponse.Data.Status)
 	}
 

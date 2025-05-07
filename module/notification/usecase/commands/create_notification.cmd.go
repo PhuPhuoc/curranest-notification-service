@@ -24,7 +24,7 @@ func (h *createNotificationHandler) Handle(ctx context.Context, ptoken *notifica
 	notiId := common.GenUUID()
 	newNoti, _ := notificationdomain.NewNotification(
 		notiId,
-		ptoken.GetAccountID(),
+		req.AccountId,
 		req.Content,
 		req.Route,
 		nil,
@@ -37,26 +37,28 @@ func (h *createNotificationHandler) Handle(ctx context.Context, ptoken *notifica
 			WithInner(err.Error())
 	}
 
-	notiReq := PushNotification{
-		To:    ptoken.GetExponentPushToken(),
-		Sound: "default",
-		Title: "CuraNest",
-		Body:  newNoti.GetContent(),
-		Data: NotificationData{
-			Screen: newNoti.GetRoute(),
-			Title:  "CuraNest notification",
-		},
-		Android: AndroidConfig{
-			ChannelID: "curanest_channel",
-		},
-		IOS: IOSConfig{
-			Badge: 1,
-		},
-	}
+	if ptoken != nil {
+		notiReq := PushNotification{
+			To:    ptoken.GetExponentPushToken(),
+			Sound: "default",
+			Title: "CuraNest",
+			Body:  newNoti.GetContent(),
+			Data: NotificationData{
+				Screen: newNoti.GetRoute(),
+				Title:  "CuraNest notification",
+			},
+			Android: AndroidConfig{
+				ChannelID: "curanest_channel",
+			},
+			IOS: IOSConfig{
+				Badge: 1,
+			},
+		}
 
-	err := h.expoNotiFetcher.PushNoti(ctx, &notiReq)
-	if err != nil {
-		log.Println("error when push notification by expo: ", err)
+		err := h.expoNotiFetcher.PushNoti(ctx, &notiReq)
+		if err != nil {
+			log.Println("error when push notification by expo: ", err)
+		}
 	}
 
 	return nil
