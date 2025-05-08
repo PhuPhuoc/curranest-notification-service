@@ -30,7 +30,7 @@ func (api *externalExpoNotiService) PushNoti(ctx context.Context, req *notificat
 	}
 
 	if apiResponse.Data.Status != "ok" {
-		return fmt.Errorf("API returned non-OK status: %s", apiResponse.Data.Status)
+		return fmt.Errorf("API returned non-OK status '%s'", apiResponse.Data.Status)
 	}
 
 	return nil
