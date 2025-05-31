@@ -25,6 +25,7 @@ func (h *createNotificationHandler) Handle(ctx context.Context, ptoken *notifica
 	newNoti, _ := notificationdomain.NewNotification(
 		notiId,
 		req.AccountId,
+		req.SubId,
 		req.Content,
 		req.Route,
 		nil,
@@ -44,6 +45,7 @@ func (h *createNotificationHandler) Handle(ctx context.Context, ptoken *notifica
 			Title: "CuraNest",
 			Body:  newNoti.GetContent(),
 			Data: NotificationData{
+				SubId:  newNoti.GetSubID(),
 				Screen: newNoti.GetRoute(),
 				Title:  "CuraNest notification",
 			},

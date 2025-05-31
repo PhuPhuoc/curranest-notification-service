@@ -23,6 +23,7 @@ func (h *updateNotiReadAtHandler) Handle(ctx context.Context, entity *notificati
 	newEntity, _ := notificationdomain.NewNotification(
 		entity.GetID(),
 		entity.GetAccountID(),
+		entity.GetSubID(),
 		entity.GetContent(),
 		entity.GetRoute(),
 		entity.GetCreatedAt(),

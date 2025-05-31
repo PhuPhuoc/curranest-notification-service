@@ -9,6 +9,7 @@ type RequestPushTokenDTO struct {
 
 type RequestCreateNotification struct {
 	AccountId uuid.UUID `json:"account-id"`
+	SubId     uuid.UUID `json:"sub-id"`
 	Content   string    `json:"content"`
 	Route     string    `json:"route"`
 }
@@ -24,8 +25,9 @@ type PushNotification struct {
 }
 
 type NotificationData struct {
-	Screen string `json:"screen"`
-	Title  string `json:"title"`
+	SubId  uuid.UUID `json:"sub-id"`
+	Screen string    `json:"screen"`
+	Title  string    `json:"title"`
 }
 
 type AndroidConfig struct {

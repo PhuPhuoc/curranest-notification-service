@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
 	notificationdomain "githuh.com/PhuPhuoc/curanest-notification-service/module/notification/domain"
 )
 
@@ -14,6 +15,7 @@ var (
 		"id",
 		"account_id",
 		"content",
+		"sub_id",
 		"route",
 	}
 
@@ -21,6 +23,7 @@ var (
 		"id",
 		"account_id",
 		"content",
+		"sub_id",
 		"route",
 		"created_at",
 		"read_at",
@@ -52,6 +55,7 @@ type NotificationDTO struct {
 	Id        uuid.UUID  `db:"id"`
 	AccountId uuid.UUID  `db:"account_id"`
 	Content   string     `db:"content"`
+	SubId     uuid.UUID  `db:"sub_id"`
 	Route     string     `db:"route"`
 	CreatedAt *time.Time `db:"created_at"`
 	ReadAt    *time.Time `db:"read_at"`
@@ -61,6 +65,7 @@ func (dto *NotificationDTO) ToNotificationEntity() (*notificationdomain.Notifica
 	return notificationdomain.NewNotification(
 		dto.Id,
 		dto.AccountId,
+		dto.SubId,
 		dto.Content,
 		dto.Route,
 		dto.CreatedAt,
@@ -73,6 +78,7 @@ func ToNotificationDTO(data *notificationdomain.Notification) *NotificationDTO {
 		Id:        data.GetID(),
 		AccountId: data.GetAccountID(),
 		Content:   data.GetContent(),
+		SubId:     data.GetSubID(),
 		Route:     data.GetRoute(),
 		CreatedAt: data.GetCreatedAt(),
 		ReadAt:    data.GetReadAt(),
