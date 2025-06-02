@@ -246,6 +246,9 @@ const docTemplate = `{
                 },
                 "route": {
                     "type": "string"
+                },
+                "sub-id": {
+                    "type": "string"
                 }
             }
         },

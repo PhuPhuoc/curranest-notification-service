@@ -47,6 +47,7 @@ func ToNotificationDTO(data *notificationdomain.Notification) *NotificationDTO {
 		Id:        data.GetID(),
 		AccountId: data.GetAccountID(),
 		Content:   data.GetContent(),
+		SubId:     data.GetSubID(),
 		Route:     data.GetRoute(),
 		CreatedAt: data.GetCreatedAt(),
 		ReadAt:    data.GetReadAt(),
